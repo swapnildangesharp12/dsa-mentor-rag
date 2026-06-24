@@ -30,42 +30,6 @@ The DSA Assistant is a Retrieval-Augmented Generation (RAG) system that answers 
 Unlike a plain chatbot that relies solely on parametric knowledge, this system grounds every answer in your uploaded DSA documents — making responses accurate, explainable, and traceable to a source.
 
 
-Architecture
-
-┌─────────────────────────────────────────────────────────────┐
-│                        USER QUERY                           │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   INGESTION PIPELINE                        │
-│                                                             │
-│   PDF Documents  →  PyPDFLoader  →  Text Chunks             │
-│                                   (RecursiveCharacter       │
-│                                    TextSplitter)            │
-│                        │                                    │
-│                        ▼                                    │
-│              Hugging Face Embeddings                        │
-│                        │                                    │
-│                        ▼                                    │
-│                  FAISS Vector Index                         │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   RETRIEVAL PIPELINE                        │
-│                                                             │
-│   Query  →  Embed Query  →  FAISS Similarity Search        │
-│                                   │                         │
-│                                   ▼                         │
-│                        Top-K Relevant Chunks                │
-│                                   │                         │
-│                                   ▼                         │
-│                     LLM (Hugging Face Inference)            │
-│                                   │                         │
-│                                   ▼                         │
-│                     Context-Aware Final Answer              │
-└─────────────────────────────────────────────────────────────┘
 
 
 Tech Stack
